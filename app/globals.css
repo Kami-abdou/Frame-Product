@@ -3,25 +3,201 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050505;
+  --foreground: #F0F0F0;
+  --gold: #B8952F;
+  --frame-border: rgba(255, 255, 255, 0.06);
+  --frame-border-hover: rgba(255, 255, 255, 0.12);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+::selection {
+  background: rgba(184, 149, 47, 0.3);
+  color: #F0F0F0;
+}
+
+/* Scrollbar */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+}
+
+/* Glass Morphism */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--frame-border);
+}
+
+.glass-strong {
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(40px) saturate(1.2);
+  -webkit-backdrop-filter: blur(40px) saturate(1.2);
+  border: 1px solid var(--frame-border);
+}
+
+.glass-subtle {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Frame Border System */
+.frame-border {
+  border: 1px solid var(--frame-border);
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.frame-border:hover {
+  border-color: var(--frame-border-hover);
+}
+
+.frame-border-gold {
+  border: 1px solid rgba(184, 149, 47, 0.15);
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.frame-border-gold:hover {
+  border-color: rgba(184, 149, 47, 0.35);
+}
+
+/* Text Effects */
+.text-shadow {
+  text-shadow: 0 2px 20px rgba(0,0,0,0.6), 0 0 80px rgba(0,0,0,0.3);
+}
+.text-shadow-sm {
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+}
+.tracking-luxury {
+  letter-spacing: 0.12em;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #B8952F 0%, #D4B156 50%, #E8E4DC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Film Grain — static (no animation for performance) */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  opacity: 0.018;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Snap Scroll */
+.snap-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+  height: 100dvh;
+}
+.snap-item {
+  scroll-snap-align: start;
+  height: 100vh;
+  height: 100dvh;
+}
+.snap-container-x {
+  scroll-snap-type: x mandatory;
+  overflow-x: scroll;
+}
+.snap-item-x {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Ken Burns Hover */
+.ken-burns-hover {
+  transition: transform 12s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.ken-burns-hover:hover {
+  transform: scale(1.04);
+}
+
+/* Range Slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: #1E1E1E;
+  border-radius: 9999px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #B8952F;
+  cursor: pointer;
+  border: 2px solid #050505;
+}
+
+/* Ticket Perforation */
+.ticket-perforation {
+  background-image: radial-gradient(circle, var(--background) 4px, transparent 4px);
+  background-size: 16px 16px;
+  background-position: -8px center;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06) 50%, transparent);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain::after { display: none; }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  .text-balance { text-wrap: balance; }
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }

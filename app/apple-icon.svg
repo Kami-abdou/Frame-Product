@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+  <rect width="180" height="180" fill="#050505"/>
+  <rect x="16" y="16" width="148" height="148" fill="none" stroke="#F0F0F0" stroke-width="3"/>
+  <text x="90" y="100" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="600" font-size="28" letter-spacing="5" fill="#F0F0F0">FRAME</text>
+</svg>
