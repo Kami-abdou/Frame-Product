@@ -59,6 +59,7 @@ export interface FrameEvent {
   media: {
     heroImage: string;
     teaserImages: string[];
+    videoUrl?: string;
     ambientColor: string;
   };
   organizer: EventOrganizer;
