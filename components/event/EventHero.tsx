@@ -5,6 +5,7 @@ import { fadeUp, stagger } from '@/lib/utils/constants';
 import { getCategoryById } from '@/lib/data/categories';
 import type { FrameEvent } from '@/lib/data/events';
 import BadgeComponent from '@/components/ui/Badge';
+import CardMediaBackground from '@/components/event/CardMediaBackground';
 
 interface EventHeroProps {
   event: FrameEvent;
@@ -15,18 +16,18 @@ export default function EventHero({ event }: EventHeroProps) {
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Ambient gradient with Ken Burns */}
-      <div
-        className="absolute inset-0 animate-ken-burns"
-        style={{
-          background: `radial-gradient(ellipse at 40% 20%, ${event.media.ambientColor}50 0%, transparent 50%),
-                       radial-gradient(ellipse at 60% 80%, ${event.media.ambientColor}25 0%, transparent 40%),
-                       linear-gradient(180deg, #0A0A0A 0%, #050505 100%)`,
-        }}
+      {/* Media background */}
+      <CardMediaBackground
+        picsumSeed={event.slug}
+        imageUrl={event.media.heroImage}
+        ambientColor={event.media.ambientColor}
       />
 
+      {/* Top scrim — keeps TopBar legible over bright images */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/75 to-transparent pointer-events-none" />
+
       {/* The Frame — thin border inset */}
-      <div className="absolute inset-6 border border-white/[0.04] pointer-events-none z-10" />
+      <div className="absolute inset-6 border border-white/[0.12] pointer-events-none z-10" />
 
       {/* Bottom gradient */}
       <div className="absolute inset-0 bg-gradient-to-t from-frame-black via-frame-black/30 to-transparent" />
