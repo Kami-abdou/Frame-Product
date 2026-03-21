@@ -7,6 +7,7 @@ import { getFrameOriginals } from '@/lib/data/events';
 import { formatShortDate, formatPrice, getStartingPrice } from '@/lib/utils/formatters';
 import TopBar from '@/components/layout/TopBar';
 import Logo from '@/components/shared/Logo';
+import CardMediaBackground from '@/components/event/CardMediaBackground';
 
 export default function OriginalsPage() {
   const originals = getFrameOriginals();
@@ -73,16 +74,18 @@ export default function OriginalsPage() {
               <div
                 className="relative aspect-[4/5] overflow-hidden frame-border-gold group"
               >
-                <div
-                  className="absolute inset-0 transition-transform duration-[12s] ease-out group-hover:scale-[1.04]"
-                  style={{
-                    background: `radial-gradient(ellipse at 50% 30%, ${event.media.ambientColor}35 0%, transparent 50%),
-                                 linear-gradient(180deg, #0A0A0A 0%, #050505 100%)`,
-                  }}
+                <CardMediaBackground
+                  picsumSeed={event.slug}
+                  imageUrl={event.media.heroImage}
+                  ambientColor={event.media.ambientColor}
+                  imageClassName="transition-transform duration-[12s] ease-out group-hover:scale-[1.04]"
                 />
 
+                {/* Top scrim — keeps TopBar legible over bright images */}
+                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/75 to-transparent pointer-events-none" />
+
                 {/* The Frame — inner border */}
-                <div className="absolute inset-4 border border-accent-gold/[0.08] pointer-events-none" />
+                <div className="absolute inset-4 border border-accent-gold/[0.12] pointer-events-none" />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-frame-black via-frame-black/20 to-transparent" />
 
