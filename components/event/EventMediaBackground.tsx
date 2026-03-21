@@ -45,7 +45,7 @@ export default function EventMediaBackground({
       {/* Layer 1: Picsum placeholder — always the base */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={`https://picsum.photos/seed/${encodeURIComponent(picsumSeed)}/600/1000`}
+        src={`https://picsum.photos/seed/${encodeURIComponent(picsumSeed)}/1200/2000`}
         alt=""
         className={cn('absolute inset-0 w-full h-full object-cover', showKenBurns && 'animate-ken-burns')}
       />
