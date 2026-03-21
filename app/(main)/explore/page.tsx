@@ -18,6 +18,7 @@ import {
 import { categories } from '@/lib/data/categories';
 import Chip from '@/components/ui/Chip';
 import BadgeComponent from '@/components/ui/Badge';
+import CardMediaBackground from '@/components/event/CardMediaBackground';
 
 export default function ExplorePage() {
   const [search, setSearch] = useState('');
@@ -126,17 +127,15 @@ function OriginalCard({ event }: { event: FrameEvent }) {
         variants={fadeUp}
         className="relative w-52 h-72 overflow-hidden frame-border-gold"
       >
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `radial-gradient(ellipse at 50% 30%, ${event.media.ambientColor}30 0%, transparent 60%),
-                         linear-gradient(180deg, #0A0A0A 0%, #050505 100%)`,
-          }}
+        <CardMediaBackground
+          picsumSeed={event.slug}
+          imageUrl={event.media.heroImage}
+          ambientColor={event.media.ambientColor}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-frame-black/95 via-frame-black/20 to-transparent" />
 
         {/* The Frame inset */}
-        <div className="absolute inset-3 border border-white/[0.03] pointer-events-none" />
+        <div className="absolute inset-3 border border-white/[0.12] pointer-events-none" />
 
         <div className="absolute bottom-0 left-0 right-0 p-4">
           <BadgeComponent type="frame_original" className="mb-2" />
@@ -166,12 +165,11 @@ function GridCard({ event }: { event: FrameEvent }) {
         variants={fadeUp}
         className="relative h-52 overflow-hidden frame-border group"
       >
-        <div
-          className="absolute inset-0 transition-transform duration-[8s] ease-out group-hover:scale-[1.03]"
-          style={{
-            background: `radial-gradient(ellipse at 50% 30%, ${event.media.ambientColor}25 0%, transparent 50%),
-                         linear-gradient(180deg, #0A0A0A 0%, #050505 100%)`,
-          }}
+        <CardMediaBackground
+          picsumSeed={event.slug}
+          imageUrl={event.media.heroImage}
+          ambientColor={event.media.ambientColor}
+          imageClassName="transition-transform duration-[8s] ease-out group-hover:scale-[1.03]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-frame-black/90 via-frame-black/20 to-transparent" />
 
