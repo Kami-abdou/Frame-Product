@@ -13,6 +13,7 @@ import { type FrameEvent } from '@/lib/data/events';
 import { getCategoryById } from '@/lib/data/categories';
 import BadgeComponent from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
+import EventMediaBackground from '@/components/event/EventMediaBackground';
 
 interface FeedCardProps {
   event: FrameEvent;
@@ -25,14 +26,13 @@ export default function FeedCard({ event, isActive }: FeedCardProps) {
 
   return (
     <div className="snap-item relative overflow-hidden">
-      {/* Ambient gradient background */}
-      <div
-        className={`absolute inset-0 ${isActive ? 'animate-ken-burns' : ''}`}
-        style={{
-          background: `radial-gradient(ellipse at 30% 15%, ${event.media.ambientColor}35 0%, transparent 50%),
-                       radial-gradient(ellipse at 70% 50%, ${event.media.ambientColor}10 0%, transparent 40%),
-                       linear-gradient(180deg, #0A0A0A 0%, #050505 100%)`,
-        }}
+      {/* Media background — picsum → heroImage → video → ambient overlay */}
+      <EventMediaBackground
+        picsumSeed={event.slug}
+        imageUrl={event.media.heroImage}
+        videoUrl={event.media.videoUrl}
+        ambientColor={event.media.ambientColor}
+        isActive={isActive}
       />
 
       {/* The Frame — thin border inset */}
