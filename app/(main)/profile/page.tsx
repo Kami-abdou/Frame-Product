@@ -31,7 +31,7 @@ export default function ProfilePage() {
   const savedEvents = events.filter((e) => user.savedEventIds.includes(e.id));
 
   return (
-    <div className="min-h-screen bg-frame-black px-5 pt-10 pb-24">
+    <div className="min-h-screen px-5 pt-10 pb-24" style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(184,149,47,0.12) 0%, transparent 50%), #050505' }}>
       {/* Profile Header */}
       <motion.div
         variants={stagger}

@@ -62,7 +62,7 @@ export default function EventDetailPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-frame-black">
+    <div className="min-h-screen" style={{ background: `radial-gradient(ellipse at 20% 85%, ${event.media.ambientColor}18 0%, transparent 50%), #050505` }}>
       <TopBar
         transparent
         showBack

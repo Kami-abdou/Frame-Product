@@ -39,7 +39,7 @@ export default function ExplorePage() {
   const showOriginals = !search.trim() && activeCategory === 'all';
 
   return (
-    <div className="min-h-screen bg-frame-black pb-24 pt-4">
+    <div className="min-h-screen pb-24 pt-4" style={{ background: 'radial-gradient(ellipse at 75% 0%, rgba(91,95,230,0.14) 0%, transparent 55%), #050505' }}>
       {/* Search */}
       <div className="px-5 mb-5">
         <div className="relative">
