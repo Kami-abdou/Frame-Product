@@ -2,11 +2,13 @@
 
 import Image from 'next/image';
 import { useRef, useEffect } from 'react';
+import { cn } from '@/lib/utils/cn';
 
 interface EventMediaBackgroundProps {
   picsumSeed: string;
   imageUrl?: string;
   videoUrl?: string;
+  /** Hex colour used for the ambient tint overlay. Expected format: `#RRGGBB` or `#RGB`. */
   ambientColor: string;
   isActive: boolean;
 }
@@ -21,6 +23,7 @@ export default function EventMediaBackground({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    if (!videoUrl) return;
     const video = videoRef.current;
     if (!video) return;
     if (isActive) {
@@ -33,7 +36,7 @@ export default function EventMediaBackground({
     } else {
       video.pause();
     }
-  }, [isActive]);
+  }, [isActive, videoUrl]);
 
   const showKenBurns = !(videoUrl && isActive);
 
@@ -44,7 +47,7 @@ export default function EventMediaBackground({
       <img
         src={`https://picsum.photos/seed/${encodeURIComponent(picsumSeed)}/600/1000`}
         alt=""
-        className={`absolute inset-0 w-full h-full object-cover${showKenBurns ? ' animate-ken-burns' : ''}`}
+        className={cn('absolute inset-0 w-full h-full object-cover', showKenBurns && 'animate-ken-burns')}
       />
 
       {/* Layer 2: Real hero image — renders over picsum when available */}
