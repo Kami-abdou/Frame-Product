@@ -1,0 +1,76 @@
+<h2>Layer stack — EventMediaBackground</h2>
+<p class="subtitle">How the layers sit on top of each other inside each feed card</p>
+
+<div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+
+  <!-- Layer diagram -->
+  <div style="flex:1;min-width:260px">
+    <div class="label" style="margin-bottom:12px">Bottom → Top</div>
+
+    <div style="display:flex;flex-direction:column-reverse;gap:6px">
+
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 16px">
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px">Layer 1 — base</div>
+        <div style="font-size:14px;color:white;font-weight:600">Picsum placeholder</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px">picsum.photos/seed/{slug}/600/1000 — always present, object-cover, ken-burns</div>
+      </div>
+
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 16px">
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px">Layer 2 — real image (optional)</div>
+        <div style="font-size:14px;color:white;font-weight:600">next/image heroImage</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px">Renders over picsum once loaded. Falls back silently if image missing.</div>
+      </div>
+
+      <div style="background:rgba(79,70,229,0.12);border:1px solid rgba(79,70,229,0.3);border-radius:8px;padding:12px 16px">
+        <div style="font-size:11px;color:rgba(139,92,246,0.7);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px">Layer 3 — video (optional)</div>
+        <div style="font-size:14px;color:white;font-weight:600">&lt;video&gt; teaser clip</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px">autoplay · muted · loop · playsInline. Plays when isActive=true, pauses otherwise.</div>
+      </div>
+
+      <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:8px;padding:12px 16px">
+        <div style="font-size:11px;color:rgba(139,92,246,0.7);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px">Layer 4 — color mood</div>
+        <div style="font-size:14px;color:white;font-weight:600">Ambient color overlay</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px">Radial gradients using ambientColor (tinted, semi-transparent). Keeps the brand mood over real media.</div>
+      </div>
+
+      <div style="background:rgba(5,5,5,0.8);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 16px">
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px">Layer 5 — readability</div>
+        <div style="font-size:14px;color:white;font-weight:600">Bottom gradient fade</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px">from-frame-black/15% → via-frame-black/80 → transparent. Unchanged from today.</div>
+      </div>
+
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:12px 16px">
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2px">Layer 6 — top</div>
+        <div style="font-size:14px;color:white;font-weight:600">Content + Frame border</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:4px">Title, meta, badges, CTA — exactly as today.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Live preview -->
+  <div style="flex:1;min-width:220px">
+    <div class="label" style="margin-bottom:12px">Preview (image + overlays)</div>
+    <div style="width:100%;max-width:260px;height:420px;border-radius:12px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,0.08)">
+      <!-- Layer 1: picsum -->
+      <img src="https://picsum.photos/seed/sunset-acoustics/600/1000" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+      <!-- Layer 4: ambient overlay -->
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 15%, rgba(139,92,246,0.45) 0%, transparent 50%), radial-gradient(ellipse at 70% 50%, rgba(139,92,246,0.15) 0%, transparent 40%)"></div>
+      <!-- Layer 5: bottom fade -->
+      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,5,5,1) 15%, rgba(5,5,5,0.8) 45%, transparent 100%)"></div>
+      <!-- Frame border -->
+      <div style="position:absolute;inset:16px;border:1px solid rgba(255,255,255,0.04);pointer-events:none"></div>
+      <!-- Layer 6: content -->
+      <div style="position:absolute;bottom:20px;left:16px;right:16px">
+        <div style="font-size:9px;color:rgba(139,92,246,0.9);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:4px">Music</div>
+        <div style="font-size:20px;font-weight:800;color:white;text-transform:uppercase;line-height:1.1;text-shadow:0 2px 8px rgba(0,0,0,0.8)">Sunset<br>Acoustics</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:6px">Gammarth · Apr 18 · 7:00 PM</div>
+        <div style="margin-top:10px;display:inline-block;background:white;color:black;font-size:11px;font-weight:700;letter-spacing:0.05em;padding:7px 16px;border-radius:4px">Book Now</div>
+      </div>
+    </div>
+    <p class="subtitle" style="margin-top:8px;font-size:11px">Actual picsum image · ambient purple overlay · bottom fade · text on top</p>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:20px">Does this layering feel right? Let me know in the terminal.</p>

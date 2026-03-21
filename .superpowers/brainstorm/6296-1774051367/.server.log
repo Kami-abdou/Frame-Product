@@ -1,0 +1,7 @@
+{"type":"server-started","port":63912,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:63912","screen_dir":"/Users/abdallahyaackoubi/Desktop/Project text/frame-app/.superpowers/brainstorm/6296-1774051367"}
+{"type":"screen-added","file":"/Users/abdallahyaackoubi/Desktop/Project text/frame-app/.superpowers/brainstorm/6296-1774051367/surfaces.html"}
+{"source":"user-event","type":"click","text":"A\n    \n      Feed Cards\n      The full-screen snap-scroll cards on the home feed — where users discover events\n      \n        \n          \n          \n          \n          \n          \n            \n              \n            \n          \n          \n            Music\n            Sunset Acoustics\n            Gammarth · Apr 18 · 7:00 PM","choice":"feed","id":null,"timestamp":1774051452539}
+{"type":"screen-added","file":"/Users/abdallahyaackoubi/Desktop/Project text/frame-app/.superpowers/brainstorm/6296-1774051367/placeholder-style.html"}
+{"type":"screen-added","file":"/Users/abdallahyaackoubi/Desktop/Project text/frame-app/.superpowers/brainstorm/6296-1774051367/layer-stack.html"}
+{"type":"screen-added","file":"/Users/abdallahyaackoubi/Desktop/Project text/frame-app/.superpowers/brainstorm/6296-1774051367/waiting.html"}
+{"type":"server-stopped","reason":"owner process exited"}

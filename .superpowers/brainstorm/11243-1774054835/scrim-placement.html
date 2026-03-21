@@ -1,0 +1,78 @@
+<h2>Where does the top scrim live?</h2>
+<p class="subtitle">The scrim only applies where a transparent TopBar floats directly over a full-height image. Two places.</p>
+
+<div class="split">
+
+  <!-- EventHero -->
+  <div class="mockup">
+    <div class="mockup-header">EventHero — /events/[slug]</div>
+    <div class="mockup-body" style="padding:0;overflow:hidden">
+      <div style="width:100%;height:320px;position:relative;background:#0a0a0a">
+        <img src="https://picsum.photos/seed/sunset-acoustics/400/600" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+        <!-- ambient overlay -->
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 15%, rgba(139,92,246,0.4) 0%, transparent 50%)"></div>
+        <!-- top scrim -->
+        <div style="position:absolute;top:0;left:0;right:0;height:96px;background:linear-gradient(to bottom, rgba(5,5,5,0.75) 0%, transparent 100%)"></div>
+        <!-- bottom fade -->
+        <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,5,5,1) 15%, rgba(5,5,5,0.8) 45%, transparent)"></div>
+        <!-- frame border — boosted -->
+        <div style="position:absolute;inset:16px;border:1px solid rgba(255,255,255,0.12);pointer-events:none"></div>
+        <!-- TopBar -->
+        <div style="position:absolute;top:0;left:0;right:0;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 16px">
+          <div style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center">
+            <div style="width:8px;height:1px;background:white;transform:rotate(0deg)"></div>
+          </div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.6);letter-spacing:0.08em">Sunset Acoustics</div>
+          <div style="width:20px"></div>
+        </div>
+        <!-- content -->
+        <div style="position:absolute;bottom:16px;left:20px;right:20px">
+          <div style="font-size:22px;font-weight:800;color:white;text-transform:uppercase;line-height:1">Sunset<br>Acoustics</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:6px">Music · Gammarth</div>
+        </div>
+      </div>
+      <div style="padding:10px 12px;font-size:11px;color:rgba(255,255,255,0.4)">Scrim: <code style="color:rgba(139,92,246,0.8)">top-0 h-24 from-black/75 to-transparent</code></div>
+    </div>
+  </div>
+
+  <!-- Originals page -->
+  <div class="mockup">
+    <div class="mockup-header">Originals page — /originals</div>
+    <div class="mockup-body" style="padding:0;overflow:hidden">
+      <div style="width:100%;height:320px;position:relative;background:#0a0a0a">
+        <img src="https://picsum.photos/seed/noir/400/600" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 15%, rgba(234,179,8,0.3) 0%, transparent 50%)"></div>
+        <!-- top scrim -->
+        <div style="position:absolute;top:0;left:0;right:0;height:96px;background:linear-gradient(to bottom, rgba(5,5,5,0.75) 0%, transparent 100%)"></div>
+        <!-- bottom fade -->
+        <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,5,5,1) 15%, rgba(5,5,5,0.8) 45%, transparent)"></div>
+        <!-- frame border — boosted -->
+        <div style="position:absolute;inset:16px;border:1px solid rgba(255,255,255,0.12);pointer-events:none"></div>
+        <!-- TopBar -->
+        <div style="position:absolute;top:0;left:0;right:0;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 16px">
+          <div style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.15)"></div>
+          <div style="font-size:14px;font-weight:700;color:white;letter-spacing:0.15em">FRAME</div>
+          <div style="width:20px"></div>
+        </div>
+        <!-- content -->
+        <div style="position:absolute;bottom:16px;left:20px;right:20px">
+          <div style="font-size:9px;color:rgba(234,179,8,0.9);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:4px">Frame Original</div>
+          <div style="font-size:22px;font-weight:800;color:white;text-transform:uppercase;line-height:1">Noir<br>Sessions</div>
+        </div>
+      </div>
+      <div style="padding:10px 12px;font-size:11px;color:rgba(255,255,255,0.4)">Same scrim on each full-height card</div>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px 16px">
+  <div style="font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px">Not affected by scrim</div>
+  <div style="display:flex;gap:24px;flex-wrap:wrap;font-size:12px;color:rgba(255,255,255,0.5)">
+    <span>✓ Explore grid cards — TopBar not floating over them</span>
+    <span>✓ Profile booking cards — small inline cards</span>
+    <span>✓ BottomNav — already has bg-black/90 backdrop-blur</span>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top:16px">Also: frame border bumped from <code>white/[0.04]</code> → <code>white/[0.12]</code> on all image surfaces. Does this look right?</p>

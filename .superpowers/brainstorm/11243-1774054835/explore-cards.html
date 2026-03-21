@@ -1,0 +1,54 @@
+<h2>Which Explore cards get image backgrounds?</h2>
+<p class="subtitle">The Explore page has two card types. Select which ones should show picsum photos.</p>
+
+<div class="options" data-multiselect>
+
+  <!-- Option A: Originals banner card (wide, tall) -->
+  <div class="option" data-choice="originals" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Originals banner cards</h3>
+      <p>Wide horizontal cards in the "FRAME Originals" carousel — currently ~160px tall with gold borders.</p>
+      <div style="margin-top:12px">
+        <div style="width:100%;height:130px;border-radius:8px;overflow:hidden;position:relative;border:1px solid rgba(234,179,8,0.3)">
+          <img src="https://picsum.photos/seed/noir/600/300" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%, rgba(234,179,8,0.35) 0%,transparent 50%), linear-gradient(to top, rgba(5,5,5,0.95) 20%, transparent 70%)"></div>
+          <div style="position:absolute;bottom:10px;left:12px">
+            <div style="font-size:9px;color:rgba(234,179,8,0.9);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:3px">Frame Original</div>
+            <div style="font-size:14px;font-weight:700;color:white;text-transform:uppercase">Noir Sessions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B: Small grid cards (2-col) -->
+  <div class="option" data-choice="grid" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Grid event cards</h3>
+      <p>Small 2-column grid cards — roughly half the screen width, ~200px tall.</p>
+      <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="height:140px;border-radius:8px;overflow:hidden;position:relative">
+          <img src="https://picsum.photos/seed/fabrika-weekend/300/300" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%, rgba(59,130,246,0.4) 0%,transparent 50%), linear-gradient(to top, rgba(5,5,5,0.95) 20%, transparent 70%)"></div>
+          <div style="position:absolute;bottom:8px;left:8px;right:8px">
+            <div style="font-size:10px;font-weight:700;color:white;text-transform:uppercase;line-height:1.2">Fabrika Weekend</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.45);margin-top:2px">Apr 25</div>
+          </div>
+        </div>
+        <div style="height:140px;border-radius:8px;overflow:hidden;position:relative">
+          <img src="https://picsum.photos/seed/sunset-acoustics/300/300" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%, rgba(139,92,246,0.4) 0%,transparent 50%), linear-gradient(to top, rgba(5,5,5,0.95) 20%, transparent 70%)"></div>
+          <div style="position:absolute;bottom:8px;left:8px;right:8px">
+            <div style="font-size:10px;font-weight:700;color:white;text-transform:uppercase;line-height:1.2">Sunset Acoustics</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.45);margin-top:2px">Apr 18</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px">You can select both. Click to toggle.</p>
