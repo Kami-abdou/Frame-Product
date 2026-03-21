@@ -9,7 +9,7 @@ export default function CategoryBar() {
   const { activeCategory, setActiveCategory } = useFeed();
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-30">
+    <div className="fixed top-0 left-0 right-0 z-30 bg-gradient-to-b from-black/70 to-transparent">
       {/* Logo row */}
       <div className="flex items-center justify-between px-4 pt-3 pb-1">
         <Logo size="sm" className="text-frame-white" />
