@@ -16,6 +16,7 @@ import { getBookingsByUser, getTotalSpent } from '@/lib/data/bookings';
 import { getWaitlistByUser } from '@/lib/data/waitlist';
 import Card from '@/components/ui/Card';
 import AnimatedCounter from '@/components/shared/AnimatedCounter';
+import CardMediaBackground from '@/components/event/CardMediaBackground';
 
 export default function ProfilePage() {
   const user = currentUser;
@@ -107,9 +108,12 @@ export default function ProfilePage() {
               return (
                 <Link key={booking.id} href={`/events/${booking.eventSlug}`} className="flex-shrink-0 w-64">
                   <Card padding={false} hover className="overflow-hidden">
-                    <div className="h-20" style={{
-                      background: `radial-gradient(ellipse at 50% 30%, ${event.media.ambientColor}30, transparent 60%), linear-gradient(180deg, #141414, #050505)`,
-                    }} />
+                    <div className="h-20 relative overflow-hidden">
+                      <CardMediaBackground
+                        picsumSeed={booking.eventSlug}
+                        ambientColor={event.media.ambientColor}
+                      />
+                    </div>
                     <div className="p-3">
                       <h3 className="font-display text-xs uppercase tracking-wide text-frame-white truncate">{event.title}</h3>
                       <p className="text-frame-smoke/50 text-label-xs mt-1">{formatEventDateTime(event.date)}</p>
@@ -187,9 +191,12 @@ export default function ProfilePage() {
               <motion.div key={event.id} variants={fadeUp}>
                 <Link href={`/events/${event.slug}`}>
                   <Card padding={false} hover className="overflow-hidden">
-                    <div className="h-24" style={{
-                      background: `radial-gradient(ellipse at 50% 30%, ${event.media.ambientColor}25, transparent 50%), linear-gradient(180deg, #141414, #050505)`,
-                    }} />
+                    <div className="h-24 relative overflow-hidden">
+                      <CardMediaBackground
+                        picsumSeed={event.slug}
+                        ambientColor={event.media.ambientColor}
+                      />
+                    </div>
                     <div className="p-3">
                       <h3 className="font-display text-xs uppercase tracking-wide text-frame-white truncate">{event.title}</h3>
                       <p className="text-frame-smoke/40 text-label-xs mt-0.5">{formatShortDate(event.date)}</p>
