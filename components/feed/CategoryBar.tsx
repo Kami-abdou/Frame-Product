@@ -11,7 +11,7 @@ export default function CategoryBar() {
   return (
     <div className="fixed top-0 left-0 right-0 z-30">
       {/* Logo row */}
-      <div className="flex items-center justify-between px-4 pt-3 pb-1 [filter:drop-shadow(0_1px_6px_rgba(0,0,0,0.95))]">
+      <div className="flex items-center justify-between px-4 pt-3 pb-1 [filter:drop-shadow(0_0_8px_rgba(139,92,246,0.7))]">
         <Logo size="sm" className="text-frame-white" />
         <span className="text-label-xs uppercase tracking-luxury text-frame-smoke/50">
           {activeCategory === 'all' ? 'All Scenes' : activeCategory}
@@ -19,7 +19,7 @@ export default function CategoryBar() {
       </div>
 
       {/* Categories */}
-      <div className="flex items-center gap-0 px-2 pb-2 overflow-x-auto hide-scrollbar [filter:drop-shadow(0_1px_6px_rgba(0,0,0,0.95))]">
+      <div className="flex items-center gap-0 px-2 pb-2 overflow-x-auto hide-scrollbar [filter:drop-shadow(0_0_8px_rgba(139,92,246,0.7))]">
         <Chip
           label="All"
           active={activeCategory === 'all'}
