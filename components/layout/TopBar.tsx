@@ -34,7 +34,10 @@ export default function TopBar({
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => router.back()}
-            className="w-8 h-8 flex items-center justify-center text-frame-smoke hover:text-frame-white transition-colors duration-300"
+            className={cn(
+              'w-8 h-8 flex items-center justify-center transition-colors duration-300',
+              transparent ? 'text-frame-white hover:text-white' : 'text-frame-smoke hover:text-frame-white'
+            )}
             aria-label="Go back"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -46,7 +49,7 @@ export default function TopBar({
         )}
 
         {title && (
-          <h1 className="font-display text-label-sm uppercase tracking-luxury text-frame-smoke truncate max-w-[200px]">
+          <h1 className={cn('font-display text-label-sm uppercase tracking-luxury truncate max-w-[200px]', transparent ? 'text-frame-white' : 'text-frame-smoke')}>
             {title}
           </h1>
         )}
