@@ -28,9 +28,9 @@ export interface User {
 
 export const currentUser: User = {
   id: 'usr-001',
-  firstName: 'Yasmine',
-  lastName: 'Ben Ali',
-  email: 'yasmine.benali@gmail.com',
+  firstName: 'Molka',
+  lastName: 'Hammemi',
+  email: 'molka.hammemi@gmail.com',
   phone: '+216 55 123 456',
   avatar: '/images/users/yasmine.jpg',
   city: 'La Marsa',
