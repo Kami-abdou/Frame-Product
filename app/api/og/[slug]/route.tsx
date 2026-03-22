@@ -18,6 +18,7 @@ export async function GET(
   const price = getStartingPrice(event.tiers);
   const priceLabel = price > 0 ? `From ${formatPrice(price)}` : 'Free';
   const dateLabel = formatShortDate(event.date);
+  const picsumUrl = `https://picsum.photos/seed/${event.slug}/1200/2000`;
 
   return new ImageResponse(
     (
@@ -31,7 +32,7 @@ export async function GET(
       >
         {/* Left 60%: cover image */}
         <img
-          src={event.media.heroImage}
+          src={picsumUrl}
           style={{ width: '720px', height: '630px', objectFit: 'cover' }}
           alt=""
         />

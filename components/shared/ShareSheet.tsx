@@ -16,6 +16,7 @@ export default function ShareSheet({ event, isOpen, onClose }: ShareSheetProps) 
   const cardRef = useRef<HTMLDivElement>(null);
   const [isCapturing, setIsCapturing] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [downloadError, setDownloadError] = useState(false);
 
   const eventUrl =
     typeof window !== 'undefined'
@@ -25,6 +26,7 @@ export default function ShareSheet({ event, isOpen, onClose }: ShareSheetProps) 
   async function handleDownload() {
     if (!cardRef.current || isCapturing) return;
     setIsCapturing(true);
+    setDownloadError(false);
     try {
       const html2canvas = (await import('html2canvas')).default;
       const canvas = await html2canvas(cardRef.current, {
@@ -36,6 +38,9 @@ export default function ShareSheet({ event, isOpen, onClose }: ShareSheetProps) 
       link.download = `${event.slug}-frame.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
+    } catch {
+      setDownloadError(true);
+      setTimeout(() => setDownloadError(false), 3000);
     } finally {
       setIsCapturing(false);
     }
@@ -58,9 +63,13 @@ export default function ShareSheet({ event, isOpen, onClose }: ShareSheetProps) 
   }
 
   async function handleCopy() {
-    await navigator.clipboard.writeText(eventUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(eventUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // clipboard API unavailable or denied — silently ignore
+    }
   }
 
   return (
@@ -122,7 +131,7 @@ export default function ShareSheet({ event, isOpen, onClose }: ShareSheetProps) 
                     onClick={handleDownload}
                     disabled={isCapturing}
                   >
-                    {isCapturing ? 'Generating…' : '↓  Download Story Card'}
+                    {isCapturing ? 'Generating…' : downloadError ? 'Failed — try again' : '↓  Download Story Card'}
                   </Button>
 
                   <div className="grid grid-cols-2 gap-3">

@@ -8,6 +8,7 @@ interface StoryCardProps {
 
 const StoryCard = forwardRef<HTMLDivElement, StoryCardProps>(({ event }, ref) => {
   const dateCity = `${formatShortDate(event.date)} · ${event.location.city}`;
+  const picsumUrl = `https://picsum.photos/seed/${event.slug}/1200/2000`;
   const eventUrl = `frame.app/events/${event.slug}`;
 
   return (
@@ -25,7 +26,7 @@ const StoryCard = forwardRef<HTMLDivElement, StoryCardProps>(({ event }, ref) =>
     >
       {/* Cover image */}
       <img
-        src={event.media.heroImage}
+        src={picsumUrl}
         crossOrigin="anonymous"
         style={{
           position: 'absolute',
