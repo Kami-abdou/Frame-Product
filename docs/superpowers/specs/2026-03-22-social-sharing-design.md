@@ -24,7 +24,7 @@ Share Button (existing, unwired)
     ↓ tap
 ShareSheet component (new)
     ├── "Download Card"  → renders StoryCard div → html2canvas → PNG download
-    ├── "Share"          → navigator.share({ title, url }) → native OS sheet
+    ├── "Share"          → navigator.share({ title, text, url }) → native OS sheet
     └── "Copy Link"      → navigator.clipboard.writeText(url)
 
 /api/og/[slug]  (new API route)
@@ -34,7 +34,25 @@ ShareSheet component (new)
 
 - No database changes
 - No authentication required
-- Fully edge-compatible
+- Edge-compatible with current static data source (see trade-offs below)
+
+---
+
+## Server / Client Page Split
+
+The event page (`app/(main)/events/[slug]/page.tsx`) is currently a `'use client'` component, but `generateMetadata` requires a Server Component. The page must be split:
+
+**`app/(main)/events/[slug]/page.tsx` — Server Component (new)**
+- Calls `getEventBySlug(params.slug)` to resolve the event
+- Exports `generateMetadata`
+- Renders `<EventDetailClient event={event} />`
+- Handles the `event === undefined` case (renders 404 or passes `null`)
+
+**`components/event/EventDetailClient.tsx` — Client Component (new, extracted)**
+- Contains all current content of `page.tsx` (hooks, state, motion, JSX)
+- Receives `event: FrameEvent` as a prop instead of calling `useParams` + `getEventBySlug`
+- Manages `isShareSheetOpen` state
+- Passes `event` to `<ShareSheet>`
 
 ---
 
@@ -43,12 +61,10 @@ ShareSheet component (new)
 ### `ShareSheet`
 **Location:** `components/shared/ShareSheet.tsx`
 
-A bottom sheet that slides up from the bottom of the screen when the share button is tapped.
-
 **Props:**
 ```ts
 interface ShareSheetProps {
-  event: Event;
+  event: FrameEvent;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -62,7 +78,7 @@ interface ShareSheetProps {
 - Cancel button at bottom
 - Backdrop blur behind sheet; closes on backdrop tap or Cancel
 - "Download Card" shows loading state while html2canvas captures (~1s)
-- "Share" falls back to copy-to-clipboard if `navigator.share` is unavailable (desktop)
+- "Share" uses `navigator.share({ title: event.title, text: 'Check out this event on Frame', url })` and falls back to copy-to-clipboard if `navigator.share` is unavailable (desktop)
 
 **Styling:** Matches Frame's dark aesthetic — `bg-frame-black/95`, `backdrop-blur-xl`, existing border and typography tokens.
 
@@ -71,22 +87,35 @@ interface ShareSheetProps {
 ### `StoryCard`
 **Location:** `components/shared/StoryCard.tsx`
 
-A 9:16 (1080×1920) card rendered as a hidden DOM element, captured by html2canvas.
-
 **Props:**
 ```ts
 interface StoryCardProps {
-  event: Event;
+  event: FrameEvent;
 }
 ```
 
+**Pixel dimensions:** The card element renders at **1080×1920 CSS pixels** off-screen. The preview thumbnail shown inside ShareSheet is a `transform: scale(0.25)` visual replica (no capture). `html2canvas` captures the full-size element directly, producing a 1080×1920 PNG suitable for Instagram Stories and TikTok.
+
+**Off-screen rendering:** The element is positioned using `position: absolute; visibility: hidden` inside a zero-overflow container — **not** `position: fixed; left: -9999px`, which is unreliable on iOS Safari (scroll offset applied, clipping risk).
+
 **Visual layout (top → bottom):**
 - Full-bleed event cover image with dark overlay (`rgba(0,0,0,0.55)`)
-- Ambient color radial glow at bottom (event's `media.ambientColor`)
-- Top-left: "FRAME" wordmark in small tracking-luxury style
+- Ambient color radial glow at bottom (`event.media.ambientColor`)
+- Top-left: "FRAME" wordmark, small, tracking-luxury
 - Lower section: event name (large display font), date + city (smoke color), subtle CTA pill ("Get Tickets →"), event URL below CTA
 
-**Capture:** Rendered off-screen via `position: fixed; left: -9999px`. `html2canvas` captures it and triggers a PNG download named `{event.slug}-frame.png`.
+**html2canvas options:**
+```ts
+html2canvas(element, {
+  useCORS: true,   // required — cover images are cross-origin
+  scale: 1,        // element already at full 1080×1920, no upscaling needed
+  logging: false,
+})
+```
+
+`useCORS: true` is required because cover images are served from an external domain. If the image host does not return `Access-Control-Allow-Origin: *`, the capture will produce a blank image. Current image source (`picsum.photos`) supports CORS.
+
+**Download:** Triggers a PNG download named `{event.slug}-frame.png`.
 
 ---
 
@@ -99,21 +128,27 @@ Uses `@vercel/og` (`ImageResponse`) to generate a 1200×630 OG image server-side
 **Visual layout:**
 - Left 60%: event cover image
 - Right 40%: dark panel with Frame wordmark, event name, date + city, starting price
-- Ambient color accent line or glow using `event.media.ambientColor`
+- Ambient color accent line using `event.media.ambientColor`
 
-**Response:** `ImageResponse` with `Cache-Control: public, max-age=31536000, immutable`
+**Response headers:**
+```
+Cache-Control: public, max-age=31536000, immutable
+```
+
+**Trade-off:** With static/in-memory data this is safe. If event data is later moved to a real database, the immutable cache will serve stale OG images until the URL changes. At that point, cache-busting via a query param or a shorter `max-age` should be reconsidered.
 
 ---
 
 ## Meta Tags — `generateMetadata`
 
-**Location:** `app/(main)/events/[slug]/page.tsx`
-
-Add `generateMetadata` export to the event page:
+**Location:** `app/(main)/events/[slug]/page.tsx` (Server Component)
 
 ```ts
-export async function generateMetadata({ params }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const event = getEventBySlug(params.slug);
+  if (!event) {
+    return { title: 'Frame — Curated Events' };
+  }
   return {
     title: event.name,
     description: event.description,
@@ -131,11 +166,13 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 }
 ```
 
+Fallback for unknown slugs returns a safe default title rather than throwing.
+
 ---
 
 ## Wiring the Share Button
 
-In `app/(main)/events/[slug]/page.tsx`, the existing share button in `TopBar`'s `rightAction` prop gets an `onClick` handler that sets `isShareSheetOpen = true`. `ShareSheet` is rendered at the bottom of the page tree.
+In `EventDetailClient.tsx`, add `isShareSheetOpen` state. The share button in `TopBar`'s `rightAction` prop sets `isShareSheetOpen = true` on tap. `<ShareSheet>` is rendered at the bottom of the component tree with `isOpen` and `onClose` props.
 
 ---
 
@@ -144,9 +181,7 @@ In `app/(main)/events/[slug]/page.tsx`, the existing share button in `TopBar`'s 
 | Package | Purpose |
 |---|---|
 | `html2canvas` | Client-side DOM → PNG capture |
-| `@vercel/og` | Server-side OG image generation |
-
-Both are new additions to `package.json`.
+| `@vercel/og` | Server-side OG image generation (already a Vercel/Next.js dep in most setups) |
 
 ---
 
