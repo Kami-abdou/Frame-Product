@@ -20,9 +20,11 @@ import SecretLocation from '@/components/event/SecretLocation';
 import CapacityIndicator from '@/components/event/CapacityIndicator';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
+import ShareSheet from '@/components/shared/ShareSheet';
 
 export default function EventDetailClient({ event }: { event: FrameEvent | null }) {
   const [descExpanded, setDescExpanded] = useState(false);
+  const [isShareSheetOpen, setIsShareSheetOpen] = useState(false);
 
   if (!event) {
     return (
@@ -65,6 +67,7 @@ export default function EventDetailClient({ event }: { event: FrameEvent | null 
         rightAction={
           <motion.button
             whileTap={{ scale: 0.9 }}
+            onClick={() => setIsShareSheetOpen(true)}
             className="w-8 h-8 flex items-center justify-center text-frame-smoke hover:text-frame-white transition-colors"
             aria-label="Share"
           >
@@ -195,6 +198,13 @@ export default function EventDetailClient({ event }: { event: FrameEvent | null 
           </div>
         </div>
       </div>
+
+      {/* Share Sheet */}
+      <ShareSheet
+        event={event}
+        isOpen={isShareSheetOpen}
+        onClose={() => setIsShareSheetOpen(false)}
+      />
     </div>
   );
 }
